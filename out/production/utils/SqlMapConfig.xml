@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--通过properties配置mysql参数  引入db.properties配置文件-->
+    <properties resource="db.properties"/>
+
+    <!-- 开启延迟加载的支持 如果有properties则放在 properties下-->
+    <!--    <settings>-->
+    <!--        <setting name="lazyLoadingEnabled" value="true"/>-->
+    <!--        <setting name="lazyLoadTriggerMethods" value=""/>&lt;!&ndash;指定对象的哪些方法会触发一次懒加载  equals,toString,clone,hashCode&ndash;&gt;-->
+    <!--        <setting name="aggressiveLazyLoading" value="false"/>-->
+    <!--    </settings>-->
+    <!-- 配置别名 注意：如果有properties配置，放在properties后面，不然报错 -->
+    <typeAliases>
+        <!--        <typeAlias type="cn.ty.pojo.User" alias="user"/>-->   <!--不写具体的别名配置，默认把pojo包下面的Bean类的类名首字母小写作为 别名-->
+        <package name="cn.ty.pojo"/>
+
+    </typeAliases>
+
+    <!-- 配置 mybatis 的环境 -->
+    <environments default="mysql">
+        <!-- 配置 mysql 的环境 -->
+        <environment id="mysql">
+            <!-- 配置事务的类型 -->
+            <transactionManager type="JDBC"></transactionManager>
+
+            <!-- 配置连接数据库的信息：用的是数据源(连接池) -->
+            <dataSource type="POOLED">
+<!--                                <property name="driver" value="com.mysql.jdbc.Driver"/>-->
+<!--                                <property name="url" value="jdbc:mysql://localhost:3306/2103a"/>-->
+<!--                                <property name="username" value="root"/>-->
+<!--                                <property name="password" value="root"/>-->
+
+                <!--通过上面properties标签引入的文件，获取mysql参数-->
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 告知 mybatis 映射配置的位置 -->
+    <mappers>
+        <!--        <mapper resource="cn/ty/mapper/UserMapper.xml"/>&lt;!&ndash;配置UserMapper的映射，进行解析&ndash;&gt;-->
+        <!--批量加载
+            指定接口的包名，自动扫描包下的所有 mapper接口进行加载
+        -->
+        <package name="cn.ty.mapper"/>
+
+    </mappers>
+
+    <!--  配置的顺序
+        -properties （属性）
+        -property
+
+        -settings（全局配置参数）
+        -setting
+
+        -typeAliases （类型别名）
+        -typeAliase
+        -package
+
+        -typeHandlers（类型处理器）
+        -objectFactory（对象工厂）
+        -plugins（插件）
+
+        -environments（环境集合属性对象）
+        -environment（环境子属性对象）
+        -transactionManager（事务管理）
+        -dataSource（数据源）
+        -mappers （映射器）
+        -mapper
+        -package
+    -->
+
+</configuration>
